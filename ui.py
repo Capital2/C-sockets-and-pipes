@@ -80,7 +80,6 @@ class Window(object):
 
     def view_command(self):
         self.list1.delete(0, END)  # make sure we've cleared all entries in the listbox every time we press the View all button
-        self.list1.insert(END, ("test", "test", "test", "test"))
 
     def search_command(self):
         self.list1.delete(0, END)
