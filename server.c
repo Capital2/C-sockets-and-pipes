@@ -1,23 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <string.h>
-#include<netinet/in.h>
-#include <arpa/inet.h>
-
-#define port 3333
-
+#include "header/serv_cli_socket.h"
 void main(){
 	int socketfd,conn;
-
 	struct sockaddr_in adresseServeur;
-
 	int newSocket;
 	struct sockaddr_in newAddr;
-	char buffer[1024];
-
 	socklen_t  sockaddr_size;
 	int childpid;
 	socketfd = socket(AF_INET, SOCK_STREAM,0);
@@ -55,24 +41,16 @@ void main(){
 		if((childpid = fork()) == 0){
 			
 			close(socketfd);
-			while(1){
-				recv(newSocket,buffer,1024,0);
-				if(strcmp(buffer,"exit") == 0){
-					printf("client %s:%d est deconnecté \n",inet_ntoa(newAddr.sin_addr),ntohs(newAddr.sin_port));
-					break;
-				}else{
-					/*
-						here we define what should the server do.
-					*/
-					printf("serveur a recu %s \n",buffer);
-					send(newSocket,buffer,strlen(buffer),0);
-					bzero(buffer,sizeof(buffer));
-				}
+			recv(newSocket,&randomNum,sizeof(int),0);
+			srand(time(NULL));
+			printf("serveur a recu %d \n",randomNum);
+			for (int i = 0; i < randomNum; ++i)
+			{
+				randomNums[i] =rand()	;
 			}
+			send(newSocket,randomNums,sizeof(randomNums),0);
+			bzero(randomNums,sizeof(randomNums));
 		}
-
-	}
 	close(newSocket);
-
-
+	}
 }
