@@ -1,23 +1,35 @@
-import tkinter as tk
+import sys,subprocess, select, os
 
-root = tk.Tk()
+from PyQt5.QtWidgets import (
+    QApplication, QDialog, QMainWindow, QMessageBox
+)
+from PyQt5.uic import loadUi
 
-input_field1 = tk.Entry(root)
-input_field1.pack()
+from main_window_ui import Ui_MainWindow
 
-input_field2 = tk.Entry(root)
-input_field2.pack()
+class Window(QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
 
-output_field1 = tk.Label(root, text="Output Field 1")
-output_field1.pack()
+    def executeb(self):
+        s = self.comboBox.currentIndex()
+        serv = subprocess.Popen(["./serveurpipe"], stdout=subprocess.PIPE)
 
-output_field2 = tk.Label(root, text="Output Field 2")
-output_field2.pack()
+        poll = select.poll()
+        poll.register(serv.stdout)
 
-radio_button = tk.Radiobutton(root, text="Option 1")
-radio_button.pack()
+        cl = subprocess.run(["./clientpipe"], stdout=subprocess.PIPE)
+        self.clientout.setHtml(cl.stdout.decode("utf-8"))
+        
+        rlist = poll.poll()
+        fd = rlist[0]
+        
+        self.servout.setHtml(os.read(fd, 1024).decode("utf-8"))
+        serv.kill()
 
-button = tk.Button(root, text="Submit")
-button.pack()
-
-root.mainloop()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = Window()
+    win.show()
+    sys.exit(app.exec())
