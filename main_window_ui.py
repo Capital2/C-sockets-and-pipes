@@ -29,13 +29,8 @@ class Ui_MainWindow(object):
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.gridLayout.addWidget(self.comboBox, 0, 0, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setInputMask("")
-        self.lineEdit.setText("")
-        self.lineEdit.setMaxLength(4)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 0, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem, 0, 1, 1, 1)
@@ -83,14 +78,17 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(MainWindow.executeb) # type: ignore
+        self.comboBox.currentIndexChanged['int'].connect(self.clientout.clear) # type: ignore
+        self.comboBox.currentIndexChanged['int'].connect(self.servout.clear) # type: ignore
+        self.comboBox.currentIndexChanged['int'].connect(MainWindow.run_server) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.comboBox.setItemText(0, _translate("MainWindow", "Tube nommé"))
-        self.comboBox.setItemText(1, _translate("MainWindow", "Socket"))
-        self.lineEdit.setPlaceholderText(_translate("MainWindow", "entrer un entier"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "Votre choix ..."))
+        self.comboBox.setItemText(1, _translate("MainWindow", "Tube nommé"))
+        self.comboBox.setItemText(2, _translate("MainWindow", "Socket"))
         self.pushButton.setText(_translate("MainWindow", "Exécuter"))
         self.label.setText(_translate("MainWindow", "Client"))
         self.label_2.setText(_translate("MainWindow", "serveur"))
