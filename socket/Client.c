@@ -31,7 +31,7 @@ int main()
 		exit(1);
 	}
 
-	printf("Connection established\n");
+	printf("Connection établit\n");
 
 	// Generate a random number client_request
 	client_request = rand() % NMAX + 1;
@@ -45,12 +45,12 @@ int main()
     int response[NMAX];
     recv(network_socket, response, sizeof(response), 0);
 	/* Traitement local de la réponse */    
-	printf("Server response :\n");
-    printf("=======================================\n");
+	printf("Reponse serveur:\n");
+    printf("<<<<<<<<<<<<>>>>>>>>>>>>\n");
     for(int i=0; i < client_request; i++){
         printf("%d  ", response[i]);
     }
-    printf("\n=======================================\n");
+    printf("\n<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>\n");
     fflush(stdout);
 
     // Close the connection

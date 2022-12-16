@@ -63,7 +63,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.servout.setHtml(serverLog.read())
 
     def closeEvent(self, event):
-        print("was here")
         if self.server is not None:
             self.server.kill()
         if self.client is not None:

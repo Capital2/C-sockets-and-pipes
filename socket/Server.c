@@ -22,8 +22,8 @@ int main()
 	FILE *fp = fopen("../server.log", "w");
 	// Listen on the socket, with 100 max connection requests queued
 	if (listen(serverSocket, 100) == 0){
-		printf("Server listening on port %d...\n", PORT);
-		fprintf(fp, "Server listening on port %d...\n", PORT);
+		printf("Serveur ecoute, port: %d...\n", PORT);
+		fprintf(fp, "Serveur ecoute, port: %d...\n", PORT);
 	}else{
 		printf("Error\n");
 		fprintf(fp, "Error\n");
@@ -40,8 +40,8 @@ int main()
 
 		char client_ip[INET_ADDRSTRLEN];
 		inet_ntop(AF_INET, &(((struct sockaddr_in *)&serverStorage)->sin_addr), client_ip, INET_ADDRSTRLEN);
-		printf("Client connected from %s\n", client_ip);
-		fprintf(fp, "Client connected from %s\n", client_ip);
+		printf("Client Connecté %s\n", client_ip);
+		fprintf(fp, "Client Connecté %s\n", client_ip);
 		fflush(stdout);
 		fflush(fp);
 		if(fork() == 0){
