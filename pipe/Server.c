@@ -4,8 +4,8 @@
 
 int main(){
         FILE *fp = fopen("../server.log", "w");
-        printf("Server waiting for client...\n");
-        fprintf(fp, "Server waiting for client...\n");
+        printf("Serveur en attente...\n");
+        fprintf(fp, "Serveur en attente...\n");
         fflush(stdout);
         fflush(fp);
         /*Déclarations */
@@ -31,8 +31,8 @@ int main(){
         while(1){
                 /* lecture d’une question */
                 read(fd1, &quest, sizeof(quest));
-                printf("Question received from process: %d\n", quest.pid);
-                fprintf(fp, "Question received from process: %d\n", quest.pid);
+                printf("Question recu de la part du process: %d\n", quest.pid);
+                fprintf(fp, "Question recu de la part du process: %d\n", quest.pid);
                 fflush(stdout);
                 fflush(fp);
                 /* construction de la réponse */
