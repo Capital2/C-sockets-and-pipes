@@ -1,12 +1,16 @@
 #include "header/serv_cli_socket.h"
+#include"handlers/handler.h"
 void main(){
-	int socketfd,conn;
+	signal(SIGINT,interrupt);
+	int conn;
 	struct sockaddr_in adresseServeur;
 	int newSocket;
+	int opt = 1;
 	struct sockaddr_in newAddr;
 	socklen_t  sockaddr_size;
 	int childpid;
 	socketfd = socket(AF_INET, SOCK_STREAM,0);
+	
 	if(socketfd < 0){
 		perror("Erreur dans la creation du socket");
 		exit(EXIT_FAILURE);
@@ -17,6 +21,11 @@ void main(){
 	adresseServeur.sin_family = AF_INET;
 	adresseServeur.sin_port = htons(port);
 	adresseServeur.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+	if (setsockopt(socketfd, SOL_SOCKET,SO_REUSEADDR | SO_REUSEPORT, &opt,sizeof(opt))) {
+			perror("setsockopt");
+			exit(EXIT_FAILURE);
+	}
 
 	conn = bind(socketfd,(struct sockaddr*)&adresseServeur, sizeof(adresseServeur));
 
@@ -53,4 +62,5 @@ void main(){
 		}
 	close(newSocket);
 	}
+	close(socketfd);
 }

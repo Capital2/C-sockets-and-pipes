@@ -39,6 +39,7 @@ void main(){
 			printf("num %d = %d \n",i,randomNums[i]);
 		}
 	}
+	close(socketClient);
 	
 }
 

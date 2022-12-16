@@ -7,8 +7,9 @@
 #include<netinet/in.h>
 #include <time.h>
 #include <arpa/inet.h>
+#include<signal.h>
 
 #define port 3333
-
+int socketfd;
 int randomNum;
 int randomNums[100];
